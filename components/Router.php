@@ -7,8 +7,6 @@
  * Time: 15:03
  */
 namespace components;
-//use controllers\TestController;
-
 
 class Router
 {
@@ -36,29 +34,33 @@ class Router
 
         // check pattern in URI
         foreach ($this->routes as $uriPattern => $path) {
+
             if(preg_match("~$uriPattern~",$uri)){
-                $segments = explode('/', $path);
+
+                /* delete GET parameters*/
+                if($pos = strpos($uri,'?')){
+                    $uri = substr($uri,0,$pos);
+                }
+
+
+                $internalRoute = preg_replace("~$uriPattern~",$path,$uri);
+                $segments = explode('/', $internalRoute);
+
 
                 //parse name Controller
-                $controllerName = ucfirst(array_shift($segments)."Controller");
+                $controllerName = '\controllers\\'.ucfirst(array_shift($segments)."Controller");
 
                 //parse name Action
                 $actionName = 'action'.ucfirst(array_shift($segments));
-                $controllerFile = ROOT.'/controllers/'.$controllerName.'.php';
 
-                if(file_exists($controllerFile)){
-                    include_once ($controllerFile);
-
-                }
+                $parameters = $segments;
 
                 $controllerObject = new $controllerName;
-                $result = $controllerObject->$actionName();
+               // $result = $controllerObject->$actionName();
+                $result = call_user_func_array([$controllerObject,$actionName],$parameters);
                 if($result != null) {
                     break;
                 }
-
-
-
 
             }
         }

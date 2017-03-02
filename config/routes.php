@@ -7,5 +7,9 @@
  */
 
 return [
-  'test' => 'test/index'
+    'test/([1-9]+)' => 'test/view/$1',
+    'test' => 'test/index',
+
+    /*site*/
+    'site' => 'site/index'
 ];

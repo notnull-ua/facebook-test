@@ -1,0 +1,13 @@
+{
+    "name": "vlad/test",
+    "description": "Test task for spheremall",
+    "authors": [
+        {
+            "name": "Vladyslav Tychyna",
+            "email": "tychyna.te@gmail.com"
+        }
+    ],
+    "require": {
+        "twbs/bootstrap": "^3.3"
+    }
+}
