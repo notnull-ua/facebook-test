@@ -10,7 +10,11 @@ namespace components;
 
 class Router
 {
+    /**
+     * Array with routes
+     * @var  $routes array */
     private $routes;
+
 
     public function __construct()
     {

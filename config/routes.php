@@ -11,5 +11,7 @@ return [
     'test' => 'test/index',
 
     /*site*/
-    'site' => 'site/index'
+    'site/login' => 'site/login',
+    'site' => 'site/index',
+    '(w+)' => 'site/$1'
 ];

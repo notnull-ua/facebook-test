@@ -13,7 +13,7 @@ namespace components;
 define('VIEWS_BASEDIR', ROOT.'/views/');
 
 class View {
-    // получить отрендеренный шаблон с параметрами $params
+    // get rendered layout with $params
     function fetchPartial($template, $params = array()){
         extract($params);
         ob_start();
@@ -21,20 +21,19 @@ class View {
         return ob_get_clean();
     }
 
-    // вывести отрендеренный шаблон с параметрами $params
+    // print rendered layout with $params
     function renderPartial($template, $params = array()){
         echo $this->fetchPartial($template, $params);
     }
 
-    // получить отрендеренный в переменную $content layout-а
-    // шаблон с параметрами $params
+    // render layout with $params to $content
+    // get rendered layout with $content
     function fetch($template, $params = array()){
         $content = $this->fetchPartial($template, $params);
         return $this->fetchPartial('layout', array('content' => $content));
     }
 
-    // вывести отрендеренный в переменную $content layout-а
-    // шаблон с параметрами $params
+    // print fetched layout with params
     function render($template, $params = array()){
         echo $this->fetch($template, $params);
     }
