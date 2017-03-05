@@ -17,6 +17,8 @@ class Controller
     function __construct()
     {
         $this->view = new View();
+
+        /* get name folder for layouts */
         $nameClass = preg_split('/([[:upper:]][[:lower:]]+)/', get_called_class(), null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         $this->view->setFolderLayout(lcfirst($nameClass[1]));
     }
