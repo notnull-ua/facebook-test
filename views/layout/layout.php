@@ -21,15 +21,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="Facebook friends">
     <meta name="author" content="Vladyslav Tychyna">
-    <link rel="icon" href="../../favicon.ico">
 
     <title>Facebook friends</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../vendor/twbs/bootstrap/dist/css/bootstrap.css">
 
     <!-- Custom styles-->
-    <link rel="stylesheet" href="../web/css/main.css">
+    <link rel="stylesheet" href="../../web/css/main.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -53,9 +52,15 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li class="active"><a href="/">Home</a></li>
+                    <?php
+                    if (!isset($_SESSION['user'])) {
+                        echo '<li><a href="/site/login">Login</a></li>';
+                    } else {
+                        echo '<li><a href="/site/logout">Logout</a></li>';
+                    }
+                    ?>
+
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

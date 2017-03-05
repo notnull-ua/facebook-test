@@ -9,4 +9,5 @@
 /* @var $this \components\View
  * @var  $model mixed Data model
  */
-echo $model;
+echo "This is the index page and  this is empty page \r\n\n";
+print_r($model);

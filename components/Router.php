@@ -12,7 +12,8 @@ class Router
 {
     /**
      * Array with routes
-     * @var  $routes array */
+     * @var  $routes array
+     */
     private $routes;
 
 
@@ -24,8 +25,9 @@ class Router
 
     /* @return string Getting request
      * */
-    private  function getURI(){
-        if(!empty($_SERVER['REQUEST_URI'])){
+    private function getURI()
+    {
+        if (!empty($_SERVER['REQUEST_URI'])) {
             return trim($_SERVER['REQUEST_URI'], "/");
         }
     }
@@ -34,35 +36,34 @@ class Router
     {
 
         //get request
-        $uri =  $this->getURI();
+        $uri = $this->getURI();
 
+        /* delete GET parameters in request*/
+        if ($pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
         // check pattern in URI
         foreach ($this->routes as $uriPattern => $path) {
 
-            if(preg_match("~$uriPattern~",$uri)){
-
-                /* delete GET parameters*/
-                if($pos = strpos($uri,'?')){
-                    $uri = substr($uri,0,$pos);
-                }
+            if (preg_match("~$uriPattern~", $uri)) {
 
 
-                $internalRoute = preg_replace("~$uriPattern~",$path,$uri);
+                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
                 $segments = explode('/', $internalRoute);
 
 
                 //parse name Controller
-                $controllerName = '\controllers\\'.ucfirst(array_shift($segments)."Controller");
+                $controllerName = '\controllers\\' . ucfirst(array_shift($segments) . "Controller");
 
                 //parse name Action
-                $actionName = 'action'.ucfirst(array_shift($segments));
+                $actionName = 'action' . ucfirst(array_shift($segments));
 
                 $parameters = $segments;
 
                 $controllerObject = new $controllerName;
-               // $result = $controllerObject->$actionName();
-                $result = call_user_func_array([$controllerObject,$actionName],$parameters);
-                if($result != null) {
+                // $result = $controllerObject->$actionName();
+                $result = call_user_func_array([$controllerObject, $actionName], $parameters);
+                if ($result != null) {
                     break;
                 }
 

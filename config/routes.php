@@ -7,11 +7,16 @@
  */
 
 return [
-    'test/([1-9]+)' => 'test/view/$1',
-    'test' => 'test/index',
+
+    'my' => 'my/index',
 
     /*site*/
     'site/login' => 'site/login',
-    'site' => 'site/index',
-    '(w+)' => 'site/$1'
+    'site/logout' => 'site/logout',
+    'login' => 'site/login',
+    'site/index' => 'site/index',
+    'index.php' => 'site/index',
+    '' => 'site/index',
+
+
 ];

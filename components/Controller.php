@@ -14,8 +14,11 @@ class Controller
 
     protected $view;
 
-    function __construct(){
+    function __construct()
+    {
         $this->view = new View();
+        $nameClass = preg_split('/([[:upper:]][[:lower:]]+)/', get_called_class(), null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $this->view->setFolderLayout(lcfirst($nameClass[1]));
     }
 
 

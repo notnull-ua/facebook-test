@@ -40,7 +40,7 @@ abstract class AbstractService implements ServiceInterface
      *
      * @var array
      */
-    protected $socialFieldsMap = array();
+    protected $socialFieldsMap = [];
     /**
      * Storage for user info
      *
@@ -104,6 +104,21 @@ abstract class AbstractService implements ServiceInterface
         }
         return $result;
     }
+
+    /**
+     * Get user friends or null if it is not set
+     *
+     * @return array|null
+     */
+    public function getFriends()
+    {
+        $result = null;
+        if (isset($this->userInfo[$this->socialFieldsMap['friends']])) {
+            $result = $this->userInfo[$this->socialFieldsMap['friends']];
+        }
+        return $result;
+    }
+
     /**
      * Get user social page url or null if it is not set
      * @return string|null
@@ -174,6 +189,21 @@ abstract class AbstractService implements ServiceInterface
         $config = $this->prepareAuthParams();
         return $result = $config['auth_url'] . '?' . urldecode(http_build_query($config['auth_params']));
     }
+
+    /**
+     * Get user info or null if it is not set
+     *
+     * @return array|null
+     */
+    public function getUserInfo()
+    {
+        $result = null;
+        if (isset($this->userInfo)) {
+            $result = $this->userInfo;
+        }
+        return $result;
+    }
+
     /**
      * Make post request and return result
      *

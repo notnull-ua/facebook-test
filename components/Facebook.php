@@ -54,10 +54,18 @@ class Facebook extends AbstractService
                 'client_secret' => $this->clientSecret,
                 'code' => $_GET['code']
             ];
-            parse_str($this->get('https://graph.facebook.com/2.8/oauth/access_token', $params, false), $tokenInfo);
+            $url = 'https://graph.facebook.com/v2.8/oauth/access_token?';
+            $tokenInfo = json_decode(file_get_contents($url . urldecode(http_build_query($params))), true);
             if (count($tokenInfo) > 0 && isset($tokenInfo['access_token'])) {
-                $params = array('access_token' => $tokenInfo['access_token']);
-                $userInfo = $this->get('https://graph.facebook.com/2.8/me', $params);
+                $params = [
+                    'access_token' => $tokenInfo['access_token'],
+                    'fields' => 'id,name,email,friends'
+                ];
+                $url = 'https://graph.facebook.com/v2.8/me?';
+                $userInfo = json_decode(file_get_contents($url . urldecode(http_build_query($params))), true);
+                $userFriends = json_decode(file_get_contents('https://graph.facebook.com/v2.8/me/friends?' . urldecode(http_build_query([
+                        'access_token' => $tokenInfo['access_token']
+                    ]))), true);
                 if (isset($userInfo['id'])) {
                     $this->userInfo = $userInfo;
                     $result = true;
@@ -75,7 +83,7 @@ class Facebook extends AbstractService
     public function prepareAuthParams()
     {
         return [
-            'auth_url' => 'https://www.facebook.com/2.8/dialog/oauth',
+            'auth_url' => 'https://www.facebook.com/dialog/oauth',
             'auth_params' => [
                 'client_id' => $this->clientId,
                 'redirect_uri' => $this->redirectUri,

@@ -40,4 +40,21 @@ class SocialAuth
     {
         return $this->service->authenticate();
     }
+
+    /**
+     * Call method of this class or methods of adapter class
+     *
+     * @param $method
+     * @param $params
+     * @return mixed
+     */
+    public function __call($method, $params)
+    {
+        if (method_exists($this, $method)) {
+            return $this->$method($params);
+        }
+        if (method_exists($this->service, $method)) {
+            return $this->service->$method();
+        }
+    }
 }
