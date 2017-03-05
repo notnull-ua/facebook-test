@@ -11,6 +11,7 @@ namespace controllers;
 /**@var $view View*/
 
 use components\Controller;
+use components\DB;
 use components\Facebook;
 use components\SocialAuth;
 use components\View;
@@ -37,7 +38,9 @@ class SiteController extends Controller
             $service = ucfirst($_GET['service']);
             $serviceObj = new Facebook($config['facebook']);
             $auth = new SocialAuth($serviceObj);
-            $auth->authenticate();
+            if ($auth->authenticate()) {
+
+            }
             session_start();
             $_SESSION['user'] = $auth->getUserInfo();
             header('Location: /my');

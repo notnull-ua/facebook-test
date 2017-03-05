@@ -61,7 +61,6 @@ class Router
                 $parameters = $segments;
 
                 $controllerObject = new $controllerName;
-                // $result = $controllerObject->$actionName();
                 $result = call_user_func_array([$controllerObject, $actionName], $parameters);
                 if ($result != null) {
                     break;

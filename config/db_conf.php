@@ -8,7 +8,7 @@
 
 return [
     'host' => 'localhost',
-    'dbname' => 'facebook',
+    'dbname' => 'fb',
     'user' => 'root',
     'password' => '',
     'charset' => 'utf8'

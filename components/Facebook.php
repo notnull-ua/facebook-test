@@ -63,9 +63,13 @@ class Facebook extends AbstractService
                 ];
                 $url = 'https://graph.facebook.com/v2.8/me?';
                 $userInfo = json_decode(file_get_contents($url . urldecode(http_build_query($params))), true);
+                var_dump($userInfo);
+
+
                 $userFriends = json_decode(file_get_contents('https://graph.facebook.com/v2.8/me/friends?' . urldecode(http_build_query([
                         'access_token' => $tokenInfo['access_token']
                     ]))), true);
+                print_r($userFriends);
                 if (isset($userInfo['id'])) {
                     $this->userInfo = $userInfo;
                     $result = true;
