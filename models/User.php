@@ -19,7 +19,6 @@ class User
      */
     public static function checkLogged()
     {
-        // Если сессия есть, вернем идентификатор пользователя
         if (isset($_SESSION['user'])) {
             return $_SESSION['user'];
         }
@@ -38,4 +37,10 @@ class User
         return true;
     }
 
+    /* todo: зробити зберігання до бази даних якщо немає користувача та оновлення даних якщо є.
+    todo: зберігати в дві таблиці.
+
+    todo: БД: створити таблицю imported_friends з полями: id, user_id, social_user_id, firstname,lastname
+    todo: та звязати її з таблицею юзерів.
+    */
 }
