@@ -16,6 +16,7 @@ $loader->addPsr4('controllers\\', ROOT . '/controllers/');
 $loader->addPsr4('components\\', ROOT . '/components/');
 $loader->addPsr4('models\\', ROOT . '/models/');
 
+session_start();
 $db = \components\DB::getInstance();
 
 $router = new \components\Router();

@@ -27,7 +27,7 @@ class SiteController extends Controller
 
     public  function  actionLogin(){
 
-        if (isset($_SESSION['login'])) {
+        if (isset($_SESSION['user'])) {
             die("Access denied");
         }
 
@@ -41,7 +41,6 @@ class SiteController extends Controller
             if ($auth->authenticate()) {
 
             }
-            session_start();
             $_SESSION['user'] = $auth->getUserInfo();
             header('Location: /my');
             return true;
@@ -55,7 +54,6 @@ class SiteController extends Controller
 
     public function actionLogout()
     {
-        session_start();
         if (!isset($_SESSION['user'])) {
             exit("Access denied");
         } else {

@@ -9,6 +9,8 @@
 namespace models;
 
 
+use components\DB;
+
 class User
 {
 
@@ -36,6 +38,26 @@ class User
         }
         return true;
     }
+
+    public static function save()
+    {
+
+    }
+
+    /**
+     * Return array with user data or null
+     *
+     * @return array|null
+     */
+    public static function getUserById()
+    {
+        $db = DB::getInstance();
+        /* @var  $db \PDO */
+        $result = $db->query("SELECT * from USER WHERE id=:id", ['id' => 1])->fetchAll();
+        return $result;
+    }
+
+    private function queryexe  bb nb
 
     /* todo: зробити зберігання до бази даних якщо немає користувача та оновлення даних якщо є.
     todo: зберігати в дві таблиці.

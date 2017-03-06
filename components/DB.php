@@ -20,7 +20,7 @@ class DB
 
     private function __construct()
     {
-        $params = include(ROOT."config/db_conf.php");
+        $params = include(ROOT . "/config/db_conf.php");
         $dsn = "mysql:host={$params['host']};dbname={$params['dbname']}";
         $attr = [
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
@@ -44,7 +44,8 @@ class DB
 
     public function query($sql, $args = []) {
        $obj = self::getInstance()->_db->prepare($sql);
-       return $obj->execute($args);
+        $obj->execute($args);
+        return $obj;
     }
 
 
