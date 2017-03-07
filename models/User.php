@@ -10,9 +10,23 @@ namespace models;
 
 
 use components\DB;
+use components\Model;
 
-class User
+class User extends Model
 {
+    /**
+     * @var $firstname string
+     */
+    public $firstname;
+
+    /** @var $lastname string */
+    public $lastname;
+
+
+    public function __construct()
+    {
+
+    }
 
     /**
      * Return user array with id and other data
@@ -39,30 +53,39 @@ class User
         return true;
     }
 
-    public static function save()
-    {
-
-    }
+    /**
+     *  Save user
+     * @return boolean
+     */
+//    public function save()
+//    {
+//        $db = DB::getInstance();
+//        return $db->queryExec("Insert INTO USER SET firstname = :firstname, lastname = :lastname",['firstname'=>$this->firstname,'lastname' => $this->lastname]);
+//    }
 
     /**
      * Return array with user data or null
      *
+     * @param $id int
      * @return array|null
      */
-    public static function getUserById()
+    public static function getUserById($id)
     {
-        $db = DB::getInstance();
-        /* @var  $db \PDO */
-        $result = $db->query("SELECT * from USER WHERE id=:id", ['id' => 1])->fetchAll();
-        return $result;
+        return self::queryFetch("Select * from USER WHERE id= :id", ['id' => $id]);
     }
 
-    private function queryexe  bb nb
 
-    /* todo: зробити зберігання до бази даних якщо немає користувача та оновлення даних якщо є.
-    todo: зберігати в дві таблиці.
+    /**
+     * Exec query and return array with  result
+     * @param $query string MySql query
+     * @param $param array Params of query for
+     * @return array
+     */
+//    private function queryFetch($query, $param = [])
+//    {
+//        $db = DB::getInstance();
+//        /* @var  $db \PDO */
+//        return $db->query($query, $param)->fetchAll();
+//    }
 
-    todo: БД: створити таблицю imported_friends з полями: id, user_id, social_user_id, firstname,lastname
-    todo: та звязати її з таблицею юзерів.
-    */
 }

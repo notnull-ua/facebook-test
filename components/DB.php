@@ -30,7 +30,7 @@ class DB
             $this->_db= new \PDO($dsn,$params['user'],$params['password'],$attr);
         }
         catch (\PDOException $e){
-            die("Не удалось установить подключение к БД". $e->getMessage());
+            die("Error connection to DB" . $e->getMessage());
         }
 
     }
@@ -42,10 +42,32 @@ class DB
         return self::$_instance;
     }
 
+
+    /**
+     * Execution query and return db object
+     * @param $sql string
+     * @param  $args array
+     * @return \PDOStatement
+     */
     public function query($sql, $args = []) {
        $obj = self::getInstance()->_db->prepare($sql);
         $obj->execute($args);
         return $obj;
+    }
+
+
+    /**
+     * Execution query and return result
+     *
+     * @param $sql string MySql query
+     * @param $args array Query params
+     * @return boolean
+     */
+    public function queryExec($sql, $args = [])
+    {
+        $obj = self::getInstance()->_db->prepare($sql);
+        return $obj->execute($args);
+
     }
 
 
