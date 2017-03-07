@@ -22,6 +22,8 @@ class User extends Model
     /** @var $lastname string */
     public $lastname;
 
+    public $email;
+
 
     public function __construct()
     {

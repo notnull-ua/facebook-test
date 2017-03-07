@@ -8,24 +8,27 @@
 
 namespace controllers;
 
-/**@var $view View*/
+/**@var $view View */
 
 use components\Controller;
 use components\DB;
 use components\Facebook;
 use components\SocialAuth;
 use components\View;
+use models\User;
 
 class SiteController extends Controller
 {
 
-    public function actionIndex(){
+    public function actionIndex()
+    {
 
-        $this->view->render('index',['model' => 1]);
+        $this->view->render('index', ['model' => 1]);
         return true;
     }
 
-    public  function  actionLogin(){
+    public function actionLogin()
+    {
 
         if (isset($_SESSION['user'])) {
             die("Access denied");
@@ -34,11 +37,22 @@ class SiteController extends Controller
 
         $config = include(ROOT . "/config/serviceConfig.php");
 
-        if(isset($_GET['service'])){
-            $service = ucfirst($_GET['service']);
-            $serviceObj = new Facebook($config['facebook']);
+        if (isset($_GET['service'])) {
+            $service = 'components\\' . ucfirst($_GET['service']);
+            $serviceObj = new $service($config[$_GET['service']]);
             $auth = new SocialAuth($serviceObj);
+
             if ($auth->authenticate()) {
+                $socialauth = \models\SocialAuth::getModelById($auth->getSocialId());
+                if (count($socialauth) == 0) {
+                    $user = new User();
+                    $namearr = $auth->getExplodedName();
+                    $user->firstname = $namearr['firstname'];
+                    $user->lastname = $namearr['lastname'];
+                    $user->email = $auth->getEmail();
+                    $user->save();
+                }
+
 
             }
             $_SESSION['user'] = $auth->getUserInfo();
@@ -48,7 +62,7 @@ class SiteController extends Controller
 
 
         $facebook = new Facebook($config['facebook']);
-        $this->view->render('login',['service' => $facebook]);
+        $this->view->render('login', ['service' => $facebook]);
         return true;
     }
 

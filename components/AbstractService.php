@@ -105,6 +105,25 @@ abstract class AbstractService implements ServiceInterface
         return $result;
     }
 
+
+    /**
+     * Return array with firstname and lastname
+     * [
+     *  'firstname' => '',
+     *  'lastname' => ''
+     * ]
+     * @return array
+     */
+    public function getExplodedName()
+    {
+
+        $nameArray = explode(' ', $this->getName());
+        return [
+            'firstname' => $nameArray[0],
+            'lastname' => $nameArray[1]
+        ];
+    }
+
     /**
      * Get user friends or null if it is not set
      *
