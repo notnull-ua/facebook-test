@@ -16,6 +16,10 @@ abstract class Model
      * Id model record
      * @var $id integer
      */
+
+
+    // todo: додати поле назва таблиці щоб робити запити
+
     public $id;
 
     /**
@@ -70,7 +74,7 @@ abstract class Model
     public static function getModelById($id)
     {
         $classname = static::get_class_name();
-        return self::queryFetch("Select * from {$classname} WHERE id= :id", ['id' => $id]);
+        return self::queryFetch("Select * from social_auth WHERE service_name=:servi and  id= :id", ['id' => $id]);
     }
 
     /**
