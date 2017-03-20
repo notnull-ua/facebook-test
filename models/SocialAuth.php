@@ -25,7 +25,7 @@ class SocialAuth extends Model
      * @param $id int
      * @return array
      */
-    public function getModelBySocialId($id)
+    public static function getModelBySocialId($id)
     {
         $db = DB::getInstance();
         return $db->query("Select * from social_auth WHERE social_id = :social_id", ['social_id' => $id])->fetchAll();

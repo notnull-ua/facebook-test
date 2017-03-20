@@ -43,7 +43,7 @@ class SiteController extends Controller
             $auth = new SocialAuth($serviceObj);
 
             if ($auth->authenticate()) {
-                $socialauth = \models\SocialAuth::getModelById($auth->getSocialId());
+                $socialauth = \models\SocialAuth::getModelBySocialId($auth->getSocialId());
                 if (count($socialauth) == 0) {
                     $user = new User();
                     $namearr = $auth->getExplodedName();

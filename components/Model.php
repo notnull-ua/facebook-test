@@ -23,16 +23,27 @@ abstract class Model
     public $id;
 
     /**
+     * @return string the table name
+     * */
+    public static function tableName()
+    {
+        $regex = '/(?<![A-Z])[A-Z]/';
+        $separator = '_';
+        return trim(strtolower(preg_replace($regex, $separator . '\0', static::get_class_name())), $separator);
+
+    }
+    /**
      * Save the model
      */
     public function save()
     {
         $db = DB::getInstance();
+        $tablename = static::tableName();
         if ($this->id != null) {
-            $query = "Update {$this->get_class_name()} SET ";
+            $query = "Update {$tablename} SET ";
             $where = " where id=" . $this->id;
         } else {
-            $query = "Insert INTO {$this->get_class_name()} SET ";
+            $query = "Insert INTO {$tablename} SET ";
         }
 
         $params = [];
@@ -50,7 +61,11 @@ abstract class Model
         if (isset($where)) {
             $query = $query . $where;
         }
-        return $db->queryExec($query, $params);
+        if ($result = $db->queryExec($query, $params)) {
+            $this->id = $db::lastInsertId();
+            return $result;
+        } else $result;
+
     }
 
     /**
@@ -73,8 +88,8 @@ abstract class Model
      */
     public static function getModelById($id)
     {
-        $classname = static::get_class_name();
-        return self::queryFetch("Select * from social_auth WHERE service_name=:servi and  id= :id", ['id' => $id]);
+        $tablename = static::tableName();
+        return self::queryFetch("Select * from {$tablename} WHERE id= :id", ['id' => $id]);
     }
 
     /**
