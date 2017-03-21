@@ -16,10 +16,6 @@ abstract class Model
      * Id model record
      * @var $id integer
      */
-
-
-    // todo: додати поле назва таблиці щоб робити запити
-
     public $id;
 
     /**

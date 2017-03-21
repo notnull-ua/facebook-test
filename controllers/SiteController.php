@@ -50,12 +50,22 @@ class SiteController extends Controller
                     $user->firstname = $namearr['firstname'];
                     $user->lastname = $namearr['lastname'];
                     $user->email = $auth->getEmail();
-                    $user->save();
+                    if ($user->save()) {
+                        $socialauth = new \models\SocialAuth();
+                        $socialauth->service_name = $auth->getProvider();
+                        $socialauth->social_id = $auth->getSocialId();
+                        $socialauth->user_id = $user->id;
+                        if (!$socialauth->save()) {
+                            throw  new \ErrorException("Save error of social_auth");
+                        }
+                    } else {
+                        throw  new \ErrorException("Save error user");
+                    }
                 }
 
 
             }
-            $_SESSION['user'] = $auth->getUserInfo();
+            $_SESSION['user'] += $auth->getUserInfo();
             header('Location: /my');
             return true;
         }

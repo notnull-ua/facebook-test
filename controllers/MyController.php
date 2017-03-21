@@ -11,6 +11,7 @@ namespace controllers;
 
 use components\Controller;
 use models\User;
+use components\Facebook;
 
 class MyController extends Controller
 {
@@ -20,14 +21,9 @@ class MyController extends Controller
         if (!isset($_SESSION['user'])) {
             die("Access denied");
         }
-        //$user = User::getUser();
 
-        var_dump(User::getModelById(1));
-        $user = new User();
-        $user->id = 2;
-        $user->firstname = "admin";
-        $user->lastname = "admin";
-        echo $user->save();
+        $fb = Facebook::getFriendsFb();
+        var_dump($_SESSION['user']);
         $this->view->render('index', ['user' => $_SESSION['user']]);
         return true;
     }

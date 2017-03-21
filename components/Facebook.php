@@ -20,7 +20,8 @@ class Facebook extends AbstractService
             'name' => 'name',
             'socialPage' => 'link',
             'sex' => 'gender',
-            'birthday' => 'birthday'
+            'birthday' => 'birthday',
+            'friends' => 'friends'
         ];
         $this->provider = 'facebook';
     }
@@ -65,9 +66,7 @@ class Facebook extends AbstractService
                 $userInfo = json_decode(file_get_contents($url . urldecode(http_build_query($params))), true);
 
 
-                $userFriends = json_decode(file_get_contents('https://graph.facebook.com/v2.8/me/friends?' . urldecode(http_build_query([
-                        'access_token' => $tokenInfo['access_token']
-                    ]))), true);
+
                 if (isset($userInfo['id'])) {
                     $this->userInfo = $userInfo;
                     $_SESSION['user']['access_token'] = $tokenInfo['access_token'];
@@ -95,6 +94,14 @@ class Facebook extends AbstractService
                 'scope' => 'email,user_birthday'
             ]
         ];
+    }
+
+    public static function getFriendsFb()
+    {
+        $userFriends = json_decode(file_get_contents('https://graph.facebook.com/v2.8/me/friends?' . urldecode(http_build_query([
+                'access_token' => $_SESSION['user']['access_token']
+            ]))), true);
+        var_dump($userFriends);
     }
 
 
